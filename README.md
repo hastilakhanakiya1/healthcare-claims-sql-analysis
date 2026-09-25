@@ -2,105 +2,103 @@
 
 ## Project Overview
 
-This project simulates a healthcare insurance claims analysis workflow using SQL.
+This project simulates a healthcare insurance claims analysis workflow using PostgreSQL.
 
-The goal is to analyze synthetic member, eligibility, provider, and claims data to identify claim denial patterns, validate member eligibility, calculate claims KPIs, evaluate provider-level trends, and perform basic data-quality checks.
+The goal is to analyze synthetic member, provider, and claims data to validate member eligibility, identify denial patterns, evaluate provider and network trends, calculate claims KPIs, and perform basic data-quality checks.
 
 All data used in this project is fictional and was created specifically for portfolio and SQL practice purposes.
 
 ## Business Questions
 
-The analysis focuses on the following questions:
+This project answers questions such as:
 
 1. Was each member eligible for coverage on the date of service?
-2. What are the primary reasons for claim denials?
-3. What percentage of claims were denied?
-4. Which providers have the highest denial rates?
-5. What dollar amount is associated with denied claims?
-6. Are there records that may require additional data-quality review?
+2. What percentage of claims were denied?
+3. What were the most common denial reasons?
+4. How did denial rates differ between in-network and out-of-network providers?
+5. Which providers accounted for the highest total claim amounts?
+6. Which providers had the highest denial rates?
+7. Were there claims that required data-quality review?
+8. Which claims were still pending?
 
 ## Database Structure
 
-The project uses four relational tables:
+The project uses three relational tables:
 
-- **Members** – Member demographic information
-- **Eligibility** – Coverage start/end dates and plan type
-- **Providers** – Provider type, location, and network status
-- **Claims** – Service dates, claim amounts, claim status, and denial reasons
+- `members`
+- `providers`
+- `claims`
 
-The tables are connected using `member_id` and `provider_id`.
+The tables are connected using primary and foreign keys.
 
 ## SQL Skills Demonstrated
 
-- SELECT statements
-- INNER JOINs
-- CASE expressions
-- WHERE filtering
-- GROUP BY
-- ORDER BY
-- COUNT and SUM
-- Percentage calculations
-- Relational data analysis
-- Eligibility validation
-- Claims KPI analysis
-- Data-quality checks
+- `SELECT`
+- `WHERE`
+- `JOIN`
+- `GROUP BY`
+- `ORDER BY`
+- `COUNT`
+- `SUM`
+- `ROUND`
+- `CASE WHEN`
+- Primary keys
+- Foreign keys
+- Data validation
+- Eligibility checks
+- Denial analysis
+- Provider analysis
+- Network analysis
+- KPI calculation
 
 ## Key Findings
 
-The synthetic dataset contains 8 claims with a total submitted claim amount of **$7,705**.
+Based on the synthetic sample dataset:
 
-- 4 claims were approved
-- 3 claims were denied
-- 1 claim was pending
-- The dataset denial rate was **37.5%**
+- 8 claims were analyzed.
+- Total claim amount was $7,705.
+- 4 claims were approved.
+- 3 claims were denied.
+- 1 claim was pending.
+- Overall denial rate was 37.5%.
+- Out-of-Network was the most common denial reason.
+- Both Out-of-Network claims in the sample were denied.
+- One claim was identified where the service date occurred 10 days after member coverage ended.
+- Charlotte Medical Center had the highest total claim amount at $5,000 across 3 claims.
+- Piedmont Specialist Center had 2 claims, both denied as Out-of-Network.
+- Data-quality logic was created to flag denied claims with missing denial reasons and other claim inconsistencies.
 
-### Eligibility Finding
-
-One claim occurred after the member's coverage had ended.
-
-The member's coverage ended on **August 31, 2026**, while the service occurred on **September 10, 2026**. The claim was appropriately recorded as denied for member ineligibility.
-
-### Denial Analysis
-
-Two claims were denied because of the project's simplified out-of-network rule, representing **$1,825** in submitted claim amounts.
-
-One eligibility-related denial represented **$2,100**.
-
-This demonstrates why both denial frequency and associated dollar value are useful when analyzing claims.
-
-### Provider Analysis
-
-In this synthetic dataset, the out-of-network specialist provider had 2 claims and both were denied, producing a **100% denial rate within the sample**.
-
-Because this is a small synthetic dataset, these percentages should not be interpreted as real-world healthcare benchmarks.
-
-## Data Quality Validation
-
-Rule-based SQL checks were used to compare claim outcomes against eligibility dates, network status, and denial-reason completeness.
-
-The current synthetic records were consistent with the simplified business rules defined for this project.
-
-> Note: Out-of-network services are not universally denied in real healthcare claims processing. Coverage depends on plan benefits and other factors. Network status is used here as a simplified portfolio-project rule.
+Because this is a small synthetic dataset, these findings demonstrate SQL analysis techniques and should not be generalized to real healthcare populations.
 
 ## Project Files
 
-- `01_database_setup.sql` – Creates the tables and loads synthetic data
-- `02_claims_analysis.sql` – Contains eligibility, denial, KPI, provider, and data-quality analysis
+### `01_database_setup.sql`
+Creates the relational database structure and inserts the synthetic member, provider, and claims data.
 
-## Tools
+### `02_claims_analysis.sql`
+Contains SQL for eligibility validation, denial analysis, KPI calculations, provider analysis, and data-quality checks.
 
-- SQL
-- SQLite
+### `03_business_insights.sql`
+Contains business-focused reporting queries for claims summary, denial rates, provider performance, network analysis, eligibility exceptions, and pending claims.
+
+## Tools Used
+
+- PostgreSQL
 - DB Fiddle
-- GitHub
+- SQL
+- Microsoft Excel
 
-## Future Enhancements
+## Excel Analysis
 
-Future versions could include:
+The same claims dataset was also analyzed in Excel to create summary metrics and visualizations for:
 
-- Larger synthetic claims datasets
-- Procedure and diagnosis codes
-- Claim processing turnaround analysis
-- Monthly denial trends
-- Provider performance metrics
-- Data visualization using Power BI or Tableau
+- Claim status distribution
+- Denial reasons
+- Network denial rate
+- Provider claim amounts
+- Provider denial rates
+- Eligibility validation
+
+## Portfolio Purpose
+
+This project demonstrates how SQL can be used in a healthcare claims environment to combine relational data, validate business rules, identify data-quality issues, and translate claim-level data into useful business insights.
